@@ -11,7 +11,13 @@ namespace CodeWars
         static void Main(string[] args)
         {
             //Console.WriteLine(digitalRoot(456));
-            Console.WriteLine(rowSumOddNumbers(42)); //2
+            //Console.WriteLine(rowSumOddNumbers(42)); //2
+            //Console.WriteLine(IsTriangle(5, 7, 10)); //5, 7, 10
+            int [] temp = ArrayDiff(new int[]{1,2,2}, new int[] {1}); //new int[]{1,2}, new int[] {1}
+            foreach (int i in temp)
+            {
+                Console.Write($"{i} ");
+            }
             Console.ReadLine();
         }
 
@@ -73,6 +79,69 @@ namespace CodeWars
             }
 
             return ret;
+        }
+
+        /// <summary>
+        /// Is this a triangle?
+        ///Implement a method that accepts 3 integer values a, b, c.The method should return true if a triangle can be built with
+        /// the sides of given length and false in any other case.
+        ///(In this case, all triangles must have surface greater than 0 to be accepted).
+        /// </summary>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        private static bool IsTriangle(int a, int b, int c)
+        {
+            return ((a + b) > c) && ((a + c) > b) && ((b + c) > a);
+        }
+
+        /// <summary>
+        /// Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the result.
+        ///It should remove all values from list a, which are present in list b.
+        ///Kata.ArrayDiff(new int[] {1, 2}, new int[] {1}) => new int[] {2}
+        ///If a value is present in b, all of its occurrences must be removed from the other:
+        ///Kata.ArrayDiff(new int[] {1, 2, 2, 2, 3}, new int[] {2}) => new int[] {1, 3}
+        /// </summary>
+        /// <param name="a"></param>
+        /// <param name="b"></param>
+        /// <returns></returns>
+        private static int[] ArrayDiff(int[] a, int[] b)
+        {
+            int[] c = new int[a.Length];
+            int k = 0;
+
+            if (a.Length == 0)
+                return new int[] { };
+            if (b.Length == 0)
+                return a;
+
+            foreach (int i in a)
+            {
+                var isExists = false;
+                for (int j = 0; j < b.Length; j++)
+                {
+                    if (b[j] == i) isExists = true;
+                }
+
+                if (!isExists)
+                {
+                    c[k] = i;
+                    k++;
+                }
+            }
+
+            int[] ret = new int[k];
+            int n = 0;
+            for (int i = 0; i < k; i++)
+            {
+                if (!string.IsNullOrEmpty(c[i].ToString()))
+                {
+                    ret[n] = c[i];
+                    n++;
+                }
+            }
+
+            return ret;
+            //return c.Where(x => x != 0).ToArray();
         }
     }
 }
