@@ -13,8 +13,14 @@ namespace CodeWars
             //Console.WriteLine(digitalRoot(456));
             //Console.WriteLine(rowSumOddNumbers(42)); //2
             //Console.WriteLine(IsTriangle(5, 7, 10)); //5, 7, 10
-            int [] temp = ArrayDiff(new int[]{1,2,2}, new int[] {1}); //new int[]{1,2}, new int[] {1}
-            foreach (int i in temp)
+            //int [] temp = ArrayDiff(new int[]{1,2,2}, new int[] {1}); //new int[]{1,2}, new int[] {1}
+            //foreach (int i in temp)
+            //{
+            //    Console.Write($"{i} ");
+            //}
+            //Console.WriteLine(AlphabetPosition("The narwhal bacons at midnight.") + "|"); //The sunset sets at twelve o' clock.
+            string[] temp = (string[]) OpenOrSenior(new[] { new[] { 59, 12 }, new[] { 45, 21 }, new[] { -12, -2 }, new[] { 12, 12 } }); //new[] { new[] { 3, 12 }, new[] { 55, 1 }, new[] { 91, -2 }, new[] { 54, 23 } })
+            foreach (string i in temp)
             {
                 Console.Write($"{i} ");
             }
@@ -23,7 +29,7 @@ namespace CodeWars
 
         /// <summary>
         /// Digital root is the recursive sum of all the digits in a number.
-        ///Given n, take the sum of the digits of n.If that value has more than one digit, continue reducing in this way until a single-digit
+        /// Given n, take the sum of the digits of n.If that value has more than one digit, continue reducing in this way until a single-digit
         /// number is produced.This is only applicable to the natural numbers.
         /// </summary>
         private static int digitalRoot(long n)
@@ -83,9 +89,9 @@ namespace CodeWars
 
         /// <summary>
         /// Is this a triangle?
-        ///Implement a method that accepts 3 integer values a, b, c.The method should return true if a triangle can be built with
+        /// Implement a method that accepts 3 integer values a, b, c.The method should return true if a triangle can be built with
         /// the sides of given length and false in any other case.
-        ///(In this case, all triangles must have surface greater than 0 to be accepted).
+        /// (In this case, all triangles must have surface greater than 0 to be accepted).
         /// </summary>
         /// <param name="n"></param>
         /// <returns></returns>
@@ -96,10 +102,10 @@ namespace CodeWars
 
         /// <summary>
         /// Your goal in this kata is to implement a difference function, which subtracts one list from another and returns the result.
-        ///It should remove all values from list a, which are present in list b.
-        ///Kata.ArrayDiff(new int[] {1, 2}, new int[] {1}) => new int[] {2}
-        ///If a value is present in b, all of its occurrences must be removed from the other:
-        ///Kata.ArrayDiff(new int[] {1, 2, 2, 2, 3}, new int[] {2}) => new int[] {1, 3}
+        /// It should remove all values from list a, which are present in list b.
+        /// Kata.ArrayDiff(new int[] {1, 2}, new int[] {1}) => new int[] {2}
+        /// If a value is present in b, all of its occurrences must be removed from the other:
+        /// Kata.ArrayDiff(new int[] {1, 2, 2, 2, 3}, new int[] {2}) => new int[] {1, 3}
         /// </summary>
         /// <param name="a"></param>
         /// <param name="b"></param>
@@ -141,7 +147,52 @@ namespace CodeWars
             }
 
             return ret;
+            // глупое решение, которое убирает и значимые нули из массива в том числе
             //return c.Where(x => x != 0).ToArray();
+        }
+
+        /// <summary>
+        /// In this kata you are required to, given a string, replace every letter with its position in the alphabet.
+        /// If anything in the text isn't a letter, ignore it and don't return it.
+        /// "a" = 1, "b" = 2, etc.
+        /// </summary>
+        /// <param name="text"></param>
+        /// <returns></returns>
+        public static string AlphabetPosition(string text)
+        {
+            string ret = "";
+            string str = "abcdefghijklmnopqrstuvwxyz";
+            
+            foreach (char c in text.ToLower())
+            {
+                int i = str.IndexOf(c) + 1;
+                if (i > 0)
+                    ret += $"{i} ";
+            }
+            int num = str.IndexOf('я');
+            return ret.TrimEnd();
+            //LINQ
+            //return (from c in text.ToLower() let i = str.IndexOf(c) + 1 where str.IndexOf(c) > 0 select i).Aggregate("", (current, i) => current + $"{i} ").TrimEnd;
+        }
+
+        /// <summary>
+        /// The Western Suburbs Croquet Club has two categories of membership, Senior and Open. They would like your help with an application form that will tell prospective members which category they will be placed.
+        /// To be a senior, a member must be at least 55 years old and have a handicap greater than 7. In this croquet club, handicaps range from -2 to +26; the better the player the lower the handicap.
+        /// </summary>
+        /// <param name="data"></param>
+        /// <returns></returns>
+        public static IEnumerable<string> OpenOrSenior(int[][] data)
+        {
+            string[] ret = new string[data.Length];
+            //не моложе 55 лет и иметь гандикап больше 7
+            int i = 0;
+            foreach (int[] ints in data)
+            {
+                ret[i] = (ints[0] >= 55 && ints[1] > 7) ? "Senior" : "Open";
+                i++;
+            }
+
+            return ret;
         }
     }
 }
