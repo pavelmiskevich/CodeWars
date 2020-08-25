@@ -35,14 +35,21 @@ namespace CodeWars
             //    Console.Write($"{i} ");
             //}
             #endregion OpenOrSenior
-            #endregion old task
             #region GetReadableTime
-            Console.WriteLine(GetReadableTime(0)); //"00:00:00"
-            Console.WriteLine(GetReadableTime(5)); //"00:00:05"
-            Console.WriteLine(GetReadableTime(60)); //"00:01:00"
-            Console.WriteLine(GetReadableTime(86399)); //"23:59:59"
-            Console.WriteLine(GetReadableTime(359999)); //"99:59:59"
+            //Console.WriteLine(GetReadableTime(0)); //"00:00:00"
+            //Console.WriteLine(GetReadableTime(5)); //"00:00:05"
+            //Console.WriteLine(GetReadableTime(60)); //"00:01:00"
+            //Console.WriteLine(GetReadableTime(86399)); //"23:59:59"
+            //Console.WriteLine(GetReadableTime(359999)); //"99:59:59"
             #endregion GetReadableTime
+            #endregion old task
+            #region productFib
+            ulong[] temp = productFib(4895); //new ulong[] { 55, 89, 1 };
+            foreach (ulong i in temp)
+            {
+                Console.Write($"{i} ");
+            }
+            #endregion productFib
             Console.ReadLine();
         }
 
@@ -228,5 +235,59 @@ namespace CodeWars
             string ret = $"{(seconds / 3600):00}:{(seconds % 3600 / 60):00}:{(seconds % 60):00}";
             return ret;
         }
+
+        /// <summary>
+        /// The Fibonacci numbers are the numbers in the following integer sequence (Fn):
+        /// 0, 1, 1, 2, 3, 5, 8, 13, 21, 34, 55, 89, 144, 233, ...
+        /// such as
+        /// F(n) = F(n-1) + F(n-2) with F(0) = 0 and F(1) = 1.
+        /// Given a number, say prod(for product), we search two Fibonacci numbers F(n) and F(n+1) verifying
+        /// F(n) * F(n+1) = prod.
+        /// Your function productFib takes an integer(prod) and returns an array:
+        /// [F(n), F(n + 1), true] or {F(n), F(n+1), 1}
+        /// or(F(n), F(n+1), True)
+        /// depending on the language if F(n) * F(n+1) = prod.
+        /// If you don't find two consecutive F(m) verifying F(m) * F(m+1) = prodyou will return
+        ///         [F(m), F(m + 1), false] or {F(n), F(n+1), 0}
+        /// or(F(n), F(n+1), False)
+        /// F(m) being the smallest one such as F(m) * F(m+1) > prod.
+        /// </summary>
+        /// <param name="prod"></param>
+        /// <returns></returns>
+        public static ulong[] productFib(ulong prod)
+        {
+            ulong prev = 0, next = 0;
+            bool more = false;
+            ulong i = 0;
+
+            while (!more)
+            {
+                //next = fib(i);
+                next = fib(i);
+                if (prev * next >= prod)
+                    more = true;
+                else
+                {
+                    prev = next;
+                    i++;
+                }
+            }
+
+            var ret = new ulong[] { (ulong) prev, (ulong) next, ulong.Parse((prev * next == prod) ? "1" : "0")};
+
+            return ret;
+        }
+
+        //static int fib(int n)
+        //{
+        //    return n > 1 ? fib(n - 1) + fib(n - 2) : n;
+        //}
+
+        static ulong FibRec(ulong p1, ulong p2, ulong n)
+        {
+            return (ulong) n == 0 ? p1 : FibRec(p2, p1 + p2, n - 1);
+        }
+        static ulong fib(ulong n) { return FibRec(0, 1, n); }
+
     }
 }
