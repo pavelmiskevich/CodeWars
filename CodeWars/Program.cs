@@ -10,20 +10,39 @@ namespace CodeWars
     {
         static void Main(string[] args)
         {
+            #region old task
+            #region WriteLine
             //Console.WriteLine(digitalRoot(456));
+            #endregion WriteLine
+            #region rowSumOddNumbers
             //Console.WriteLine(rowSumOddNumbers(42)); //2
+            #endregion rowSumOddNumbers
+            #region IsTriangle
             //Console.WriteLine(IsTriangle(5, 7, 10)); //5, 7, 10
+            #endregion IsTriangle
+            #region ArrayDiff
             //int [] temp = ArrayDiff(new int[]{1,2,2}, new int[] {1}); //new int[]{1,2}, new int[] {1}
             //foreach (int i in temp)
             //{
             //    Console.Write($"{i} ");
             //}
             //Console.WriteLine(AlphabetPosition("The narwhal bacons at midnight.") + "|"); //The sunset sets at twelve o' clock.
-            string[] temp = (string[]) OpenOrSenior(new[] { new[] { 59, 12 }, new[] { 45, 21 }, new[] { -12, -2 }, new[] { 12, 12 } }); //new[] { new[] { 3, 12 }, new[] { 55, 1 }, new[] { 91, -2 }, new[] { 54, 23 } })
-            foreach (string i in temp)
-            {
-                Console.Write($"{i} ");
-            }
+            #endregion ArrayDiff
+            #region OpenOrSenior
+            //string[] temp = (string[]) OpenOrSenior(new[] { new[] { 59, 12 }, new[] { 45, 21 }, new[] { -12, -2 }, new[] { 12, 12 } }); //new[] { new[] { 3, 12 }, new[] { 55, 1 }, new[] { 91, -2 }, new[] { 54, 23 } })
+            //foreach (string i in temp)
+            //{
+            //    Console.Write($"{i} ");
+            //}
+            #endregion OpenOrSenior
+            #endregion old task
+            #region GetReadableTime
+            Console.WriteLine(GetReadableTime(0)); //"00:00:00"
+            Console.WriteLine(GetReadableTime(5)); //"00:00:05"
+            Console.WriteLine(GetReadableTime(60)); //"00:01:00"
+            Console.WriteLine(GetReadableTime(86399)); //"23:59:59"
+            Console.WriteLine(GetReadableTime(359999)); //"99:59:59"
+            #endregion GetReadableTime
             Console.ReadLine();
         }
 
@@ -192,6 +211,21 @@ namespace CodeWars
                 i++;
             }
 
+            return ret;
+        }
+
+        /// <summary>
+        /// Write a function, which takes a non-negative integer (seconds) as input and returns the time in a human-readable format (HH:MM:SS)
+        /// HH = hours, padded to 2 digits, range: 00 - 99
+        /// MM = minutes, padded to 2 digits, range: 00 - 59
+        /// SS = seconds, padded to 2 digits, range: 00 - 59
+        /// The maximum time never exceeds 359999 (99:59:59)
+        /// </summary>
+        /// <param name="seconds"></param>
+        /// <returns></returns>
+        public static string GetReadableTime(int seconds)
+        {
+            string ret = $"{(seconds / 3600):00}:{(seconds % 3600 / 60):00}:{(seconds % 60):00}";
             return ret;
         }
     }
