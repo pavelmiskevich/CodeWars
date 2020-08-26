@@ -49,10 +49,21 @@ namespace CodeWars
             //    Console.Write($"{i} ");
             //}
             #endregion productFib
-            #endregion old task
             #region Order
-            Console.WriteLine(Order("is2 Thi1s T4est 3a")); //"Thi1s is2 3a T4est"
+            //Console.WriteLine(Order("is2 Thi1s T4est 3a")); //"Thi1s is2 3a T4est"
             #endregion Order
+            #endregion old task
+            #region QueueTime
+            //Console.WriteLine(QueueTime(new int[] { }, 1)); //0
+            //Console.WriteLine(QueueTime(new int[] { 1, 2, 3, 4 }, 1)); //10
+            //Console.WriteLine(QueueTime(new int[] { 2, 2, 3, 3, 4, 4 }, 2)); //9
+            //Console.WriteLine(QueueTime(new int[] { 10, 2, 3, 3 }, 2)); //10
+            //Console.WriteLine(QueueTime(new int[] { 1, 2, 3, 4, 5 }, 100)); //5
+            //Console.WriteLine(QueueTime(new int[] { 2, 4, 3, 2, 2 }, 3)); //5
+            //Console.WriteLine(QueueTime(new int[] { 2, 3, 10 }, 2)); //12
+            //Console.WriteLine(QueueTime(new int[] { 2, 2, 3, 10 }, 3)); //12
+            Console.WriteLine(QueueTime(new int[] { 2, 2, 2, 1 }, 3)); //3
+            #endregion QueueTime
             Console.ReadLine();
         }
 
@@ -321,6 +332,45 @@ namespace CodeWars
                     ret += $"{s1} ";
             }
             return ret.TrimEnd();
+        }
+
+        /// <summary>
+        /// There is a queue for the self-checkout tills at the supermarket. Your task is write a function to calculate the total time required for all the customers to check out!
+        /// input
+        /// customers: an array of positive integers representing the queue.Each integer represents a customer, and its value is the amount of time they require to check out.
+        /// n: a positive integer, the number of checkout tills.
+        /// output
+        /// The function should return an integer, the total time required.
+        /// </summary>
+        /// <param name="customers"></param>
+        /// <param name="n"></param>
+        /// <returns></returns>
+        public static long QueueTime(int[] customers, int n)
+        {
+            long ret = 0;
+            long[] arrTime = new long[n];
+            foreach (int customer in customers)
+            {
+                long minArrTimeValue = 0;
+                int queueNumber = 0;
+                for (int i = 0; i < arrTime.Length; i++)
+                {
+                    if (i == 0) minArrTimeValue = arrTime[i];
+                    else if (arrTime[i] < minArrTimeValue)
+                    {
+                        minArrTimeValue = arrTime[i];
+                        queueNumber = i;
+                    }
+                }
+                arrTime[queueNumber] += customer;
+                //arrTime[Array.IndexOf(arrTime, arrTime.Min())] += customer;
+            }
+            foreach (long l in arrTime)
+            {
+                if (ret < l) ret = l;
+            }
+            return ret;
+            //return arrTime.Max();
         }
     }
 }
