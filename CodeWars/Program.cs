@@ -42,14 +42,17 @@ namespace CodeWars
             //Console.WriteLine(GetReadableTime(86399)); //"23:59:59"
             //Console.WriteLine(GetReadableTime(359999)); //"99:59:59"
             #endregion GetReadableTime
-            #endregion old task
             #region productFib
-            ulong[] temp = productFib(4895); //new ulong[] { 55, 89, 1 };
-            foreach (ulong i in temp)
-            {
-                Console.Write($"{i} ");
-            }
+            //ulong[] temp = productFib(4895); //new ulong[] { 55, 89, 1 };
+            //foreach (ulong i in temp)
+            //{
+            //    Console.Write($"{i} ");
+            //}
             #endregion productFib
+            #endregion old task
+            #region Order
+            Console.WriteLine(Order("is2 Thi1s T4est 3a")); //"Thi1s is2 3a T4est"
+            #endregion Order
             Console.ReadLine();
         }
 
@@ -289,5 +292,35 @@ namespace CodeWars
         }
         static ulong fib(ulong n) { return FibRec(0, 1, n); }
 
+        /// <summary>
+        /// Your task is to sort a given string. Each word in the string will contain a single number. This number is the position the word should have in the result.
+        /// Note: Numbers can be from 1 to 9. So 1 will be the first word(not 0).
+        /// If the input string is empty, return an empty string. The words in the input String will only contain valid consecutive numbers.
+        /// </summary>
+        /// <param name="words"></param>
+        /// <returns></returns>
+        public static string Order(string words)
+        {
+            string ret = "";
+            string[] arrStr = words.Split(' ');
+            string[] arrStrRet = new string[9];
+            foreach (string s in arrStr)
+            {
+                foreach (char c in s)
+                {
+                    int.TryParse(c.ToString(), out var k);
+                    if (k == 0) continue;
+                    arrStrRet[k - 1] = s;
+                    break;
+                }
+            }
+
+            foreach (string s1 in arrStrRet)
+            {
+                if (s1 != null)
+                    ret += $"{s1} ";
+            }
+            return ret.TrimEnd();
+        }
     }
 }
