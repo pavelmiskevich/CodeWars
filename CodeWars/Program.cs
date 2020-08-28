@@ -52,7 +52,6 @@ namespace CodeWars
             #region Order
             //Console.WriteLine(Order("is2 Thi1s T4est 3a")); //"Thi1s is2 3a T4est"
             #endregion Order
-            #endregion old task
             #region QueueTime
             //Console.WriteLine(QueueTime(new int[] { }, 1)); //0
             //Console.WriteLine(QueueTime(new int[] { 1, 2, 3, 4 }, 1)); //10
@@ -62,8 +61,12 @@ namespace CodeWars
             //Console.WriteLine(QueueTime(new int[] { 2, 4, 3, 2, 2 }, 3)); //5
             //Console.WriteLine(QueueTime(new int[] { 2, 3, 10 }, 2)); //12
             //Console.WriteLine(QueueTime(new int[] { 2, 2, 3, 10 }, 3)); //12
-            Console.WriteLine(QueueTime(new int[] { 2, 2, 2, 1 }, 3)); //3
+            //Console.WriteLine(QueueTime(new int[] { 2, 2, 2, 1 }, 3)); //3
             #endregion QueueTime
+            #endregion old task
+            #region 
+            Console.WriteLine(GetUnique(new[] { -2, 2, 2, 2 })); ///0.55
+            #endregion
             Console.ReadLine();
         }
 
@@ -371,6 +374,54 @@ namespace CodeWars
             }
             return ret;
             //return arrTime.Max();
+        }
+
+        //using System.Collections.Generic;
+        //using System.Linq;
+        /// <summary>
+        /// Find the unique number
+        /// There is an array with some numbers. All numbers are equal except for one. Try to find it!
+        /// findUniq([ 1, 1, 1, 2, 1, 1 ]) === 2
+        /// findUniq([ 0, 0, 0.55, 0, 0 ]) === 0.55
+        /// </summary>
+        /// <param name="numbers"></param>
+        /// <returns></returns>
+        public static int GetUnique(IEnumerable<int> numbers)
+        {
+            #region array solution
+            int notUnique = 0;
+            int? prev = null;
+            foreach (int number in numbers)
+            {
+                if (prev == number)
+                {
+                    notUnique = number;
+                    break;
+                }
+                prev = number;
+            }
+            foreach (int number in numbers)
+            {
+                if (!notUnique.Equals(number))
+                    return number;
+                //if (notUnique != number)
+                //{
+                //    ret = number;
+                //    break;
+                //}
+            }
+            #endregion array solution
+            #region LINQ solution
+            //var unique = numbers.Distinct();
+            //foreach (int i in unique)
+            //{
+            //    //int c = numbers.Count(x => x == i);
+            //    int c = numbers.Count(i.Equals);
+            //    if (c == 1)
+            //        return i;
+            //}
+            #endregion LINQ solution
+            return 0;
         }
     }
 }
