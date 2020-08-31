@@ -63,10 +63,17 @@ namespace CodeWars
             //Console.WriteLine(QueueTime(new int[] { 2, 2, 3, 10 }, 3)); //12
             //Console.WriteLine(QueueTime(new int[] { 2, 2, 2, 1 }, 3)); //3
             #endregion QueueTime
+            #region GetUnique
+            //Console.WriteLine(GetUnique(new[] { -2, 2, 2, 2 })); ///0.55
+            #endregion GetUnique
             #endregion old task
-            #region 
-            Console.WriteLine(GetUnique(new[] { -2, 2, 2, 2 })); ///0.55
-            #endregion
+            #region Score
+            Console.WriteLine(Score(new int[] { 2, 2, 2, 5, 3 })); //250
+            Console.WriteLine(Score(new int[] { 1, 1, 5, 3, 3 })); //250
+            Console.WriteLine(Score(new int[] { 1, 1, 1, 1, 1 })); //1200
+            Console.WriteLine(Score(new int[] { 2, 3, 4, 6, 2 })); //0
+            Console.WriteLine(Score(new int[] { 4, 4, 4, 3, 3 })); //400
+            #endregion Score
             Console.ReadLine();
         }
 
@@ -422,6 +429,73 @@ namespace CodeWars
             //}
             #endregion LINQ solution
             return 0;
+        }
+
+        /// <summary>
+        /// 5 kyu Greed is Good
+        /// Greed is a dice game played with five six-sided dice. Your mission, should you choose to accept it, is to score a throw according
+        /// to these rules. You will always be given an array with five six-sided dice values.
+        /// </summary>
+        /// <param name="dice"></param>
+        /// <returns></returns>
+        public static int Score(int[] dice)
+        {
+            int ret = 0;
+            int[] dup = new int[6];
+            foreach (int i in dice)
+            {
+                dup[i - 1]++;
+            }
+            #region better solution
+            for (int i = 0; i < dup.Length; i++)
+            {
+                switch (i)
+                {
+                    case 0:
+                        ret += (dup[i] / 3 * 1000) + dup[i] % 3 * 100;
+                        break;
+                    case 4:
+                        ret += ((dup[i] / 3 * (i + 1)) * 100) + dup[i] % 3 * 50;
+                        break;
+                    default:
+                        ret += ((dup[i] / 3 * (i + 1)) * 100);
+                        break;
+                }
+            }
+            #endregion better solution
+            #region simple solution
+            //for (int i = 0; i < dup.Length; i++)
+            //{
+            //    if (dup[i] >= 3)
+            //    {
+            //        switch (i)
+            //        {
+            //            case 0:
+            //                ret += ((i + 1) * 1000) + (dup[i] - 3) * 100;
+            //                break;
+            //            case 4:
+            //                ret += ((i + 1) * 100) + (dup[i] - 3) * 50;
+            //                break;
+            //            default:
+            //                ret += (i + 1) * 100;
+            //                break;
+            //        }
+            //    }
+            //    else
+            //        if (dup[i] > 0)
+            //            switch (i)
+            //            {
+            //                case 0:
+            //                    ret += dup[i] * 100;
+            //                    break;
+            //                case 4:
+            //                    ret += dup[i] * 50;
+            //                    break;
+            //            }
+
+            //}
+            #endregion simple solution
+            return ret;
         }
     }
 }
