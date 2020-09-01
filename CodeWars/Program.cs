@@ -66,14 +66,21 @@ namespace CodeWars
             #region GetUnique
             //Console.WriteLine(GetUnique(new[] { -2, 2, 2, 2 })); ///0.55
             #endregion GetUnique
-            #endregion old task
             #region Score
-            Console.WriteLine(Score(new int[] { 2, 2, 2, 5, 3 })); //250
-            Console.WriteLine(Score(new int[] { 1, 1, 5, 3, 3 })); //250
-            Console.WriteLine(Score(new int[] { 1, 1, 1, 1, 1 })); //1200
-            Console.WriteLine(Score(new int[] { 2, 3, 4, 6, 2 })); //0
-            Console.WriteLine(Score(new int[] { 4, 4, 4, 3, 3 })); //400
+            //Console.WriteLine(Score(new int[] { 2, 2, 2, 5, 3 })); //250
+            //Console.WriteLine(Score(new int[] { 1, 1, 5, 3, 3 })); //250
+            //Console.WriteLine(Score(new int[] { 1, 1, 1, 1, 1 })); //1200
+            //Console.WriteLine(Score(new int[] { 2, 3, 4, 6, 2 })); //0
+            //Console.WriteLine(Score(new int[] { 4, 4, 4, 3, 3 })); //400
             #endregion Score
+            #endregion old task
+            #region GetPeaks
+            GetPeaks(new int[] { 1, 2, 3, 6, 4, 1, 2, 3, 2, 1 }); // new int[]{3,7}, new int[]{6,3},
+            GetPeaks(new int[] { 3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 3 }); //
+            GetPeaks(new int[] { 3, 2, 3, 6, 4, 1, 2, 3, 2, 1, 2, 2, 2, 1 }); //
+            GetPeaks(new int[] { 2, 1, 3, 1, 2, 2, 2, 2, 1 }); //
+            GetPeaks(new int[] { 2, 1, 3, 1, 2, 2, 2, 2 }); //
+            #endregion GetPeaks
             Console.ReadLine();
         }
 
@@ -495,6 +502,43 @@ namespace CodeWars
 
             //}
             #endregion simple solution
+            return ret;
+        }
+
+        /// <summary>
+        /// 5 kyu Pick peaks
+        /// In this kata, you will write a function that returns the positions and the values of the "peaks" (or local maxima) of a numeric array.
+        /// For example, the array arr = [0, 1, 2, 5, 1, 0] has a peak at position 3 with a value of 5 (since arr[3] equals 5).
+        /// </summary>
+        /// <param name="arr"></param>
+        /// <returns></returns>
+        public static Dictionary<string, List<int>> GetPeaks(int[] arr)
+        {
+            int pos = 0, peak = 0;
+            List<int> posL = new List<int>(), peaksL = new List<int>();
+            for (int i = 1; i < arr.Length; i++)
+            {
+                if (arr[i - 1] < arr[i])
+                {
+                    pos = i;
+                    peak = arr[i];
+                }
+                else
+                {
+                    if (arr[i - 1] <= arr[i] || pos <= 0) continue;
+                    posL.Add(pos);
+                    peaksL.Add(peak);
+                    pos = 0;
+                    peak = 0;
+                }
+            }
+
+            var ret = new Dictionary<string, List<int>>()
+            {
+                ["pos"] = posL,
+                ["peaks"] = peaksL
+            };
+            
             return ret;
         }
     }
