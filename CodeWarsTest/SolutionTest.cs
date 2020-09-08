@@ -6,7 +6,6 @@ using System.Text;
 using System.Text.RegularExpressions;
 public class SolutionTest
 {
-
     [Test]
     public void SampleTests()
     {
@@ -24,5 +23,13 @@ public class SolutionTest
                 "coursing. An olla of rather more beef than mutton, a salad on most",
                 "nights, scraps on Saturdays, lentils on Fridays, and a pigeon or so extra",
                 "on Sundays, made away with three-quarters of his income." })));
+    }
+
+    [TestCase(new[] { 1, 2, 2, 2 }, ExpectedResult = 1)]
+    [TestCase(new[] { -2, 2, 2, 2 }, ExpectedResult = -2)]
+    [TestCase(new[] { 11, 11, 14, 11, 11 }, ExpectedResult = 14)]
+    public int BaseTest(IEnumerable<int> numbers)
+    {
+        return Kata.GetUnique(numbers);
     }
 }
