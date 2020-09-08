@@ -662,5 +662,54 @@ public static class Kata
 
         return ret;
     }
+
+    /// <summary>
+    /// 4 kyu Text align justify
+    /// Your task in this Kata is to emulate text justification in monospace font. You will be given a single-lined text and the expected
+    /// justification width. The longest word will never be greater than this width.
+    /// </summary>
+    /// <param name="str"></param>
+    /// <param name="len"></param>
+    /// <returns></returns>
+    public static string Justify(string str, int len)
+    {
+        string ret = "", buf = "";
+        if (str == null) return ret;
+        if (str.Length <= len) return str;
+        List<int> wStartIndex = new List<int>();
+        foreach (string s in str.Split(" "))
+        {
+            if (buf.Length + s.Length <= len)
+            {
+                buf += s + " ";
+                wStartIndex.Add(buf.Length);
+            }
+            else
+            {
+                buf = buf.TrimEnd();
+                if (wStartIndex.Count > 0) wStartIndex.Remove(wStartIndex[wStartIndex.Count - 1]);
+                int i = 0, k = 0;
+                while (len > buf.Length && wStartIndex.Count > 0)
+                {
+                    buf = buf.Insert(wStartIndex[i] + k, " ");
+                    wStartIndex[i] = wStartIndex[i] + 1 + k;
+                    i++;
+                    k++;
+                    if (i == wStartIndex.Count)
+                    {
+                        i = 0;
+                        k = 0;
+                    }
+                }
+                ret += buf + "\n";
+                buf = s + " ";
+                wStartIndex = new List<int>();
+                wStartIndex.Add(buf.Length);
+            }
+        }
+        if (buf != "") ret += buf.TrimEnd();
+
+        return ret;
+    }
 }
 
